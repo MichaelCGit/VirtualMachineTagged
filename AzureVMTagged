@@ -3,18 +3,35 @@
 "contentVersion": "1.0.0.0",
 "parameters": {
 "adminUsername": {
+	"defaultValue":
+		"MichaelC",
 "type": "string",
 "metadata": {
 "description": "Username for the Virtual Machine."
 }
 },
 "adminPassword": {
+	"defaultValue":
+	  "Chambers123*",
 "type": "securestring",
 "metadata": {
 "description": "Password for the Virtual Machine."
 }
 },
+
+"resourceTags": {
+       "type": "object",
+       "defaultValue": {
+           "Product": "Luware Recording",
+           "Stage": "PROD",
+           "Location": "CHNO"
+
+	   }
+},
+
 "dnsLabelPrefix": {
+	"defaulValue":
+	"lupprodrbs",
 "type": "string",
 "metadata": {
 "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
@@ -53,6 +70,7 @@
 "name": "[variables('storageAccountName')]",
 "apiVersion": "2016-01-01",
 "location": "[resourceGroup().location]",
+"tags": "[parameters('resourceTags')]",
 "sku": {
 "name": "Standard_LRS"
 },
@@ -64,6 +82,7 @@
 "type": "Microsoft.Network/publicIPAddresses",
 "name": "[variables('publicIPAddressName')]",
 "location": "[resourceGroup().location]",
+"tags": "[parameters('resourceTags')]",
 "properties": {
 "publicIPAllocationMethod": "Dynamic",
 "dnsSettings": {
@@ -76,6 +95,7 @@
 "type": "Microsoft.Network/virtualNetworks",
 "name": "[variables('virtualNetworkName')]",
 "location": "[resourceGroup().location]",
+"tags": "[parameters('resourceTags')]",
 "properties": {
 "addressSpace": {
 "addressPrefixes": [
@@ -97,6 +117,7 @@
 "type": "Microsoft.Network/networkInterfaces",
 "name": "[variables('nicName')]",
 "location": "[resourceGroup().location]",
+"tags": "[parameters('resourceTags')]",
 "dependsOn": [
 "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
 "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
@@ -124,6 +145,7 @@
 "type": "Microsoft.Compute/virtualMachines",
 "name": "[variables('vmName')]",
 "location": "[resourceGroup().location]",
+"tags": "[parameters('resourceTags')]",
 "dependsOn": [
 "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
 "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
