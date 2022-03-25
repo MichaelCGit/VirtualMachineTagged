@@ -30,7 +30,7 @@
 },
 
 "dnsLabelPrefix": {
-	"defaulValue":
+	"defaultValue":
 	"lupprodrbs",
 "type": "string",
 "metadata": {
